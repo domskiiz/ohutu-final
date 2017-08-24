@@ -3,14 +3,14 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>Z37QGHVRJ2.org.reactjs.native.example.Ohutu312</string>
+	<string>5S6Y5VXNKT.org.reactjs.native.example.ohutgfertk</string>
 	<key>com.apple.developer.team-identifier</key>
-	<string>Z37QGHVRJ2</string>
+	<string>5S6Y5VXNKT</string>
 	<key>get-task-allow</key>
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>Z37QGHVRJ2.org.reactjs.native.example.Ohutu312</string>
+		<string>5S6Y5VXNKT.org.reactjs.native.example.ohutgfertk</string>
 	</array>
 </dict>
 </plist>

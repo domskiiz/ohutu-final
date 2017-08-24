@@ -1,4 +1,7 @@
 import React from 'react';
+/************************
+// THIS IS THE FINAL MAP
+************************/
 import {
   View,
   Text,
@@ -42,14 +45,14 @@ export default class OhutuMap extends React.Component {
     this.timerID = setInterval(() => {
       AsyncStorage.getItem('token')
       .then((token) => {
-        axios.get('https://5ce92fb3.ngrok.io/markerList', {
+        axios.get('https://b9d8d4b2.ngrok.io/markerList', {
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token
           }
         })
         .then((markers) => {
-          fetch('https://5ce92fb3.ngrok.io/getUser', {
+          fetch('https://b9d8d4b2.ngrok.io/getUser', {
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
@@ -124,10 +127,12 @@ export default class OhutuMap extends React.Component {
   createMarker(e) {
     var lat = e.nativeEvent.coordinate.latitude;
     var long = e.nativeEvent.coordinate.longitude;
+    var date = Date.now()
+    console.log('this is the date rn:' + date)
     // authenticate user and grab user id
     AsyncStorage.getItem('token')
     .then((token) => {
-      fetch('https://5ce92fb3.ngrok.io/getUser', {
+      fetch('https://b9d8d4b2.ngrok.io/getUser', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -140,7 +145,7 @@ export default class OhutuMap extends React.Component {
       .then((data) => data.json())
       // save marker with ref to user
       .then(data => {
-        fetch('https://5ce92fb3.ngrok.io/createMarker', {
+        fetch('https://b9d8d4b2.ngrok.io/createMarker', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -149,7 +154,8 @@ export default class OhutuMap extends React.Component {
           body: JSON.stringify({
             lat: lat,
             long: long,
-            user: data.id
+            user: data.id,
+            createdAt: date
           })
         })
         .then(data => data.json())
@@ -159,6 +165,7 @@ export default class OhutuMap extends React.Component {
           var newMarker = {
             lat: data.lat,
             long: data.long,
+            time: date
           }
           slicedMarkers.push(newMarker);
           this.setState({

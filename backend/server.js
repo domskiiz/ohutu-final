@@ -25,7 +25,7 @@ jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 jwtOptions.secretOrKey = process.env.SECRETKEY;
 
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
+  // console.log('payload received', jwt_payload);
   var user = User.findById(jwt_payload.id, function(err, user) {
     if (user) {
       next(null, user);
@@ -134,6 +134,7 @@ app.post('/getUser', passport.authenticate('jwt', { session: false }), function(
 });
 
 app.post('/createMarker', passport.authenticate('jwt', { session: false }), function(req, res) {
+  console.log(req.body)
   var new_marker = new Marker(req.body);
   new_marker.save(function(err, marker) {
     if (err) {
