@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/React/Base/RCTMultipartStreamReader.m \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/React/Base/RCTMultipartStreamReader.h
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/React/Base/RCTMultipartStreamReader.m \
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/React/Base/RCTMultipartStreamReader.h

@@ -1,7 +1,7 @@
 dependencies: \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/Libraries/NativeAnimation/RCTAnimationUtils.m \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/Libraries/NativeAnimation/RCTAnimationUtils.h \
-  /Users/alissaaadomski/horizons-projects/ohutu2/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
-  /Users/alissaaadomski/horizons-projects/ohutu2/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
-  /Users/alissaaadomski/horizons-projects/ohutu2/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
-  /Users/alissaaadomski/horizons-projects/ohutu2/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/Libraries/NativeAnimation/RCTAnimationUtils.m \
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/Libraries/NativeAnimation/RCTAnimationUtils.h \
+  /Users/Swetha/Documents/ohutu-final/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTDefines.h \
+  /Users/Swetha/Documents/ohutu-final/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTLog.h \
+  /Users/Swetha/Documents/ohutu-final/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTAssert.h \
+  /Users/Swetha/Documents/ohutu-final/ios/build/Build/Products/Debug-iphonesimulator/include/React/RCTUtils.h

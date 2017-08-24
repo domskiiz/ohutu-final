@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/ReactCommon/cxxreact/JSCLegacyTracing.cpp
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/ReactCommon/cxxreact/JSCLegacyTracing.cpp

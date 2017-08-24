@@ -9,14 +9,9 @@
 		o+R/lXAkrnvLPdZn5khiPnIjjSM=
 		</data>
 		<key>Base.lproj/LaunchScreen.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			7Y+TWTJcs5b6Jq5+DN54boiVd30=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
+		<data>
+		zgSEbxi3sJbnr86ExfXHxIHDEUc=
+		</data>
 		<key>Entypo.ttf</key>
 		<data>
 		R4cKZ91Qhxdl95nKqX2ochnuR8U=
@@ -232,7 +227,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		k00/h1kiZhP0v/XbarcSDlnNr9A=
+		vnR0mGes3WHn1S4GazcNwcBUla0=
 		</data>
 		<key>Ionicons.ttf</key>
 		<data>
@@ -268,7 +263,7 @@
 		</data>
 		<key>PlugIns/ohutu2Tests.xctest/ohutu2Tests</key>
 		<data>
-		UDEcMLBta8MyLrlrVjLmANH44V8=
+		yjQteJc9O0dVOtEg8430Lbophk8=
 		</data>
 		<key>SimpleLineIcons.ttf</key>
 		<data>
@@ -296,14 +291,12 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7Y+TWTJcs5b6Jq5+DN54boiVd30=
+			zgSEbxi3sJbnr86ExfXHxIHDEUc=
 			</data>
 			<key>hash2</key>
 			<data>
-			5nXajJn8o0cLSwd/pouiIzDJOFfAJ37lXgkuICn6DwA=
+			/jjAH4CIXMRFE9hntKvE6TM7F4ZSeiA2+b1kmZIMNXg=
 			</data>
-			<key>optional</key>
-			<true/>
 		</dict>
 		<key>Entypo.ttf</key>
 		<dict>
@@ -965,11 +958,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			UDEcMLBta8MyLrlrVjLmANH44V8=
+			yjQteJc9O0dVOtEg8430Lbophk8=
 			</data>
 			<key>hash2</key>
 			<data>
-			HGIjt8kWWMSjjkZYEDm/FBvOwf2BjcS3rDmn97L6Nx4=
+			4gIehQAsA90w/FsPoI8Q8qQ6i3/yrfWeY4cSTcl6uUQ=
 			</data>
 		</dict>
 		<key>SimpleLineIcons.ttf</key>
@@ -1012,6 +1005,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^version.plist$</key>
 		<true/>
@@ -1057,6 +1055,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^Info\.plist$</key>
 		<dict>

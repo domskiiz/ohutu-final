@@ -1,3 +1,3 @@
 dependencies: \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/ReactCommon/jschelpers/Unicode.cpp \
-  /Users/alissaaadomski/horizons-projects/ohutu2/node_modules/react-native/ReactCommon/jschelpers/Unicode.h
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/ReactCommon/jschelpers/Unicode.cpp \
+  /Users/Swetha/Documents/ohutu-final/node_modules/react-native/ReactCommon/jschelpers/Unicode.h
