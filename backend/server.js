@@ -144,6 +144,16 @@ app.post('/createMarker', passport.authenticate('jwt', { session: false }), func
   });
 });
 
+app.delete('/deleteMarker', passport.authenticate('jwt', { session: false }), function(req, res) {
+  Marker.remove({lat: req.body.lat, long: req.body.long, user: req.body.user}, function(err) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.json({'success': 'deleted'});
+    }
+  });
+});
+
 app.get('/markerList', passport.authenticate('jwt', { session: false }), function(req, res) {
   Marker.find({}, function(err, markers){
     if (err) {
