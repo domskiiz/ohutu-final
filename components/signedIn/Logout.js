@@ -8,8 +8,8 @@ import {
   Button,
   AsyncStorage
 } from 'react-native';
-
-import SignedOut from './Navigators.js';
+import Header from './Header.js';
+import SignedOut from '../Navigators.js';
 
 export default class Logout extends React.Component {
   static navigationOptions = {
@@ -28,13 +28,12 @@ export default class Logout extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button
-          onPress={() => this.props.navigation.navigate('DrawerOpen')}
-          title="Navigate"
-        />
-        <TouchableOpacity onPress={() => this._onLogout()}>
-          <Text style={styles.registerText}>Logout</Text>
-        </TouchableOpacity>
+        <Header display='Logout' navOptions={() => this.props.navigation.navigate('DrawerOpen')}/>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <TouchableOpacity onPress={() => this._onLogout()}>
+            <Text style={styles.registerText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -45,7 +44,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#DCEDFF',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   registerText: {
     fontFamily: 'Hind-Light',

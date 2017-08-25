@@ -7,13 +7,15 @@ import {
   StyleSheet,
   Button,
   AsyncStorage,
-  AlertIOS
+  Modal
 } from 'react-native';
 import MapView from 'react-native-maps';
-import axios from 'axios';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import axios from 'axios';
+
 import Header from './Header.js';
+import DescModal from './Modal.js';
 
 export default class OhutuMap extends React.Component {
   static navigationOptions = {
@@ -24,8 +26,10 @@ export default class OhutuMap extends React.Component {
     super(props);
     this.state = {
       markers: [],
+      markerIndex: 0,
       region: null,
       gpsAccuracy: null,
+      modalVisible: false,
     }
   }
 
@@ -76,16 +80,27 @@ export default class OhutuMap extends React.Component {
             markers.data.forEach((marker) => {
               let color = '#57E2E5'
               if (user.id !== marker.user) {
-                color = 'black'
+                color = 'grey'
               }
-              var newMarker = {
-                lat: marker.lat,
-                long: marker.long,
-                color: color
+              if (marker.description) {
+                var newMarker = {
+                  lat: marker.lat,
+                  long: marker.long,
+                  color: color,
+                  description: marker.description,
+                  createdAt: marker.createdAt
+                }
+              } else {
+                var newMarker = {
+                  lat: marker.lat,
+                  long: marker.long,
+                  color: color,
+                  createdAt: marker.createdAt
+                }
               }
               newMarkers.push(newMarker);
             });
-            this.setState({ markers: newMarkers})
+            this.setState({ markers: newMarkers })
           })
         })
       })
@@ -94,54 +109,108 @@ export default class OhutuMap extends React.Component {
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+    clearInterval(this.timerID)
+  }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
+
+  updateMarkerIndex(index) {
+    this.setState({markerIndex: index})
   }
 
   createMarker(e) {
+
     var lat = e.nativeEvent.coordinate.latitude;
     var long = e.nativeEvent.coordinate.longitude;
-    // authenticate user and grab user id
-    AsyncStorage.getItem('token')
-    .then((token) => {
-      fetch('https://5ce92fb3.ngrok.io/getUser', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + token
-        },
-        body: JSON.stringify({
-          token: token
-        })
-      })
-      .then((data) => data.json())
-      // save marker with ref to user
-      .then(data => {
-        fetch('https://5ce92fb3.ngrok.io/createMarker', {
+    var date = Date.now();
+
+    //////////////////////////////////////////
+    //      CHECK IF MODAL SHOULD OPEN      //
+    //  should be clicking on existing pin  //
+    //  should be clicking on your own pin  //
+    //////////////////////////////////////////
+
+    var color = '#57E2E5'
+    this.state.markers.forEach((marker, index) => {
+      if (marker.lat === lat && marker.long === long && marker.color === color) {
+        if (Object.keys(marker).length > 4) {
+          return;
+        }
+        else {
+          this.updateMarkerIndex(index);
+          this.setModalVisible(true);
+          return;
+        }
+      }
+    });
+
+    ////////////////////////////////////////////
+    //    CHECK IF CLICKING ON EXISTING PIN   //
+    //  pin is not your own pin: dont return  //
+    ////////////////////////////////////////////
+
+    var pinAlreadyThere = false;
+    for (var k = 0; k < this.state.markers.length; k++) {
+      if (lat === this.state.markers[k].lat) {
+        if (long === this.state.markers[k].long) {
+         pinAlreadyThere = true;
+        }
+      }
+    }
+
+    //////////////////////
+    // CREATE A NEW PIN //
+    //////////////////////
+
+    if (!pinAlreadyThere) {
+      // authenticate user and grab id
+      AsyncStorage.getItem('token')
+      .then((token) => {
+        fetch('https://5ce92fb3.ngrok.io/getUser', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token
           },
           body: JSON.stringify({
-            lat: lat,
-            long: long,
-            user: data.id
+            token: token
           })
         })
-        .then(data => data.json())
-        // save new marker to state
+        .then((data) => data.json())
+        // save marker with ref to user
         .then(data => {
-          var slicedMarkers = [...this.state.markers];
-          var newMarker = {
-            lat: data.lat,
-            long: data.long,
-          }
-          slicedMarkers.push(newMarker);
-          this.setState({
-            markers: slicedMarkers
+          fetch('https://5ce92fb3.ngrok.io/createMarker', {
+            method: 'POST',
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer " + token
+            },
+            body: JSON.stringify({
+              lat: lat,
+              long: long,
+              user: data.id,
+              createdAt: date
+            })
+          })
+          .then(data => data.json())
+          // save new marker to state
+          .then(data => {
+            var slicedMarkers = [...this.state.markers];
+            var newMarker = {
+              lat: data.lat,
+              long: data.long,
+              createdAt: date
+            }
+            slicedMarkers.push(newMarker);
+            this.setState({
+              markers: slicedMarkers
+            });
           });
         });
       });
-    });
+    }
   }
 
   deleteMarker() {
@@ -199,25 +268,52 @@ export default class OhutuMap extends React.Component {
         }
       });
     });
+  }
 
+  updateDescription(text) {
+    if (this.state.markers.length === 0) {
+      alert('Need to drop a pin first!')
+    } else {
+      var slicedMarker = [...this.state.markers];
+      var updatingMarker = Object.assign({}, slicedMarker[this.state.markerIndex], {description: text});
+      slicedMarker[this.state.markerIndex] = updatingMarker;
+      var lastDesc = slicedMarker[this.state.markerIndex].description
+      this.setState({ markers: slicedMarker });
+      fetch('https://5ce92fb3.ngrok.io/updateDesc', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          lat: slicedMarker[this.state.markerIndex].lat,
+          long: slicedMarker[this.state.markerIndex].long,
+          description: lastDesc
+        })
+      })
+      .then(data => data.json())
+      .then(data => console.log(data))
+      .catch((err) => console.log("error fetching", err))
+    }
   }
 
   onRegionChange(region, gpsAccuracy) {
-      this.setState({
-          region: region,
-          gpsAccuracy: gpsAccuracy || this.state.gpsAccuracy
-      });
+    this.setState({
+        region: region,
+        gpsAccuracy: gpsAccuracy || this.state.gpsAccuracy
+    });
   }
 
 
   render() {
     return (
       <View style={styles.container}>
-        <Header navOptions={() => this.props.navigation.navigate('DrawerOpen')}/>
+        <Header display='Home' navOptions={() => this.props.navigation.navigate('DrawerOpen')}/>
+        <DescModal visible={this.state.modalVisible} changeText={(text) => this.updateDescription(text)} hide={() => this.setModalVisible(!this.state.modalVisible)} />
         <MapView.Animated
           style={{flex: 1}}
           showsUserLocation={true}
           followUserLocation={true}
+          loadingEnabled={true}
           zoomEnabled={true}
           ref='map'
           region={this.state.region}
@@ -225,12 +321,11 @@ export default class OhutuMap extends React.Component {
           onPress={(e) => this.createMarker(e)}
           >
             {this.state.markers.map((marker, i) => (
-              <MapView.Marker key={i} draggable
+              <MapView.Marker key={i}
                 coordinate={{latitude: parseFloat(marker.lat),
                 longitude: parseFloat(marker.long)}}
                 pinColor={marker.color}
-                title={"Sketchy Area!"}
-                description={marker.description}
+                title={marker.description}
               />
             ))}
         </MapView.Animated>
@@ -250,7 +345,7 @@ const styles = StyleSheet.create({
   },
   undoButton: {
     position: 'absolute',
-    right: 25,
+    left: 25,
     bottom: 25,
     height: 60,
     width: 60,

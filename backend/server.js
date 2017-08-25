@@ -85,9 +85,6 @@ app.post('/register', function(req, res) {
         password: hash
       });
       newUser.save(function(err, user) {
-        //////////////////////////////////////////
-        // TODO: MAKE ERROR CODES MORE SPECIFIC //
-        //////////////////////////////////////////
         if (err) {
           console.log('ERROR IN SAVING USER', err);
           res.status(400);
@@ -98,7 +95,7 @@ app.post('/register', function(req, res) {
       });
     });
   }
-})
+});
 
 // authenticates user
 app.post("/login", function(req, res) {
@@ -124,15 +121,17 @@ app.post("/login", function(req, res) {
         }
       });
     }
-  })
+  });
 });
 
+// returns the id of the user making request
 app.post('/getUser', passport.authenticate('jwt', { session: false }), function(req, res){
   jwt.verify(req.body.token, process.env.SECRETKEY, function(err, decoded) {
     res.json(decoded)
   });
 });
 
+// creates a new marker in the database
 app.post('/createMarker', passport.authenticate('jwt', { session: false }), function(req, res) {
   var new_marker = new Marker(req.body);
   new_marker.save(function(err, marker) {
@@ -144,6 +143,7 @@ app.post('/createMarker', passport.authenticate('jwt', { session: false }), func
   });
 });
 
+// deletes marker from the database
 app.delete('/deleteMarker', passport.authenticate('jwt', { session: false }), function(req, res) {
   Marker.remove({lat: req.body.lat, long: req.body.long, user: req.body.user}, function(err) {
     if (err) {
@@ -154,15 +154,38 @@ app.delete('/deleteMarker', passport.authenticate('jwt', { session: false }), fu
   });
 });
 
+// returns an array of all the markers in the database
 app.get('/markerList', passport.authenticate('jwt', { session: false }), function(req, res) {
-  Marker.find({}, function(err, markers){
+  Marker.find({}, function(err, markers) {
     if (err) {
       res.send(err)
     } else {
       res.json(markers)
     }
   });
-})
+});
+
+// updates the description of the marker in database
+app.post('/updateDesc', function(req, res) {
+  Marker.findOne({lat: req.body.lat, long: req.body.long}, function(err, marker) {
+    if (err)
+      res.send(err)
+    else {
+      if (!marker) {
+        res.send(err)
+      }
+      else {
+        marker.description = req.body.description
+        marker.save(function(err, newMarker) {
+          if (err) {
+            res.send(err)
+          }
+          res.json(newMarker)
+        });
+      }
+    }
+  });
+});
 
 app.listen(3000, function () {
   console.log('Backend server running on port 3000!')
