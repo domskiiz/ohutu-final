@@ -42,7 +42,7 @@ export default class Register extends React.Component {
   onChangeUsername(text) {
     this.setState({username: text}, function() {
       //check if a user already exists
-      fetch('https://5ce92fb3.ngrok.io/usernames', {
+      fetch('https://aqueous-sierra-69526.herokuapp.com/usernames', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -112,7 +112,7 @@ export default class Register extends React.Component {
     if (this.state.errors.length !== 0) {
       return;
     } else {
-      fetch('https://5ce92fb3.ngrok.io/register', {
+      fetch('https://aqueous-sierra-69526.herokuapp.com/register', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"

@@ -57,14 +57,14 @@ export default class OhutuMap extends React.Component {
     this.timerID = setInterval(() => {
       AsyncStorage.getItem('token')
       .then((token) => {
-        axios.get('https://5ce92fb3.ngrok.io/markerList', {
+        axios.get('https://aqueous-sierra-69526.herokuapp.com/markerList', {
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + token
           }
         })
         .then((markers) => {
-          fetch('https://5ce92fb3.ngrok.io/getUser', {
+          fetch('https://aqueous-sierra-69526.herokuapp.com/getUser', {
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
@@ -116,8 +116,8 @@ export default class OhutuMap extends React.Component {
     this.setState({ modalVisible: visible });
   }
 
-  updateMarkerIndex(index) {
-    this.setState({markerIndex: index})
+  updateMarkerIndex(index, cb) {
+    this.setState({markerIndex: index}, cb)
   }
 
   createMarker(e) {
@@ -139,8 +139,9 @@ export default class OhutuMap extends React.Component {
           return;
         }
         else {
-          this.updateMarkerIndex(index);
-          this.setModalVisible(true);
+          this.updateMarkerIndex(index, function() {
+            this.setModalVisible(true);
+          });
           return;
         }
       }
@@ -168,7 +169,7 @@ export default class OhutuMap extends React.Component {
       // authenticate user and grab id
       AsyncStorage.getItem('token')
       .then((token) => {
-        fetch('https://5ce92fb3.ngrok.io/getUser', {
+        fetch('https://aqueous-sierra-69526.herokuapp.com/getUser', {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -181,7 +182,7 @@ export default class OhutuMap extends React.Component {
         .then((data) => data.json())
         // save marker with ref to user
         .then(data => {
-          fetch('https://5ce92fb3.ngrok.io/createMarker', {
+          fetch('https://aqueous-sierra-69526.herokuapp.com/createMarker', {
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
@@ -218,7 +219,7 @@ export default class OhutuMap extends React.Component {
     // authenticate user and grab id
     AsyncStorage.getItem('token')
     .then((token) => {
-      fetch('https://5ce92fb3.ngrok.io/getUser', {
+      fetch('https://aqueous-sierra-69526.herokuapp.com/getUser', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -250,7 +251,7 @@ export default class OhutuMap extends React.Component {
           }
         }
         if (index !== -1) {
-          fetch('https://5ce92fb3.ngrok.io/deleteMarker', {
+          fetch('https://aqueous-sierra-69526.herokuapp.com/deleteMarker', {
             method: 'DELETE',
             headers: {
               "Content-Type": "application/json",
@@ -279,7 +280,7 @@ export default class OhutuMap extends React.Component {
       slicedMarker[this.state.markerIndex] = updatingMarker;
       var lastDesc = slicedMarker[this.state.markerIndex].description
       this.setState({ markers: slicedMarker });
-      fetch('https://5ce92fb3.ngrok.io/updateDesc', {
+      fetch('https://aqueous-sierra-69526.herokuapp.com/updateDesc', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
   },
   undoButton: {
     position: 'absolute',
-    left: 25,
+    right: 25,
     bottom: 25,
     height: 60,
     width: 60,

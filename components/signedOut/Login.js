@@ -35,7 +35,7 @@ export default class Login extends React.Component {
 
   login() {
     this.setState({errors: []}, function() {
-      fetch('https://5ce92fb3.ngrok.io/login', {
+      fetch('https://aqueous-sierra-69526.herokuapp.com/login', {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
