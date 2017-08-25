@@ -154,6 +154,26 @@ app.get('/markerList', passport.authenticate('jwt', { session: false }), functio
     }
   });
 })
+app.post('/markerDesc', function(req, res) {
+  Marker.findOne({lat: req.body.lat, long: req.body.long}, function(err, marker) {
+    if (err)
+      res.send(err)
+    else {
+      if (!marker) {
+        res.send(err)
+      }
+      else {
+        marker.description = req.body.description
+        marker.save(function(err, newMarker) {
+          if (err) {
+            res.send(err)
+          }
+          res.json(newMarker)
+        })
+      }
+    }
+  })
+})
 
 app.listen(3000, function () {
   console.log('Backend server running on port 3000!')

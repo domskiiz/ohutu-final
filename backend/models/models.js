@@ -33,7 +33,7 @@ var markerSchema = new Schema ({
   createdAt: {
     type: Date,
     required: true,
-    expires: 60*60
+    expires: 60*60*1
   }
 });
 
