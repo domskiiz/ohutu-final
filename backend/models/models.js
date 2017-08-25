@@ -29,6 +29,11 @@ var markerSchema = new Schema ({
     type: String,
     required: true,
     ref: 'User'
+  },
+  createdAt: {
+    type: Date,
+    required: true,
+    expires: 60*60*1
   }
 });
 

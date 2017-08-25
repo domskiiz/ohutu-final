@@ -31,7 +31,7 @@ export default class Header extends React.Component {
           </View>
         </View>
         <View style={{flex: 1, alignItems: 'center'}}>
-          <Text style={styles.headerText}> Home </Text>
+          <Text style={styles.headerText}> {this.props.display} </Text>
         </View>
         <View style={{flex: 1, alignItems: 'flex-end'}}>
           <Text style={styles.ohutu}>

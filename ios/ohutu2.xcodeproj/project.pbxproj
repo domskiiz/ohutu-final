@@ -1269,6 +1269,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.ohutr67rty8u9y;
 				PRODUCT_NAME = ohutu2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1292,6 +1293,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.ohutr67rty8u9y;
 				PRODUCT_NAME = ohutu2;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

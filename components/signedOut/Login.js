@@ -8,7 +8,7 @@ import {
   StyleSheet
 } from 'react-native';
 
-import { SignedIn } from './Navigators.js';
+import { SignedIn } from '../Navigators.js';
 
 export default class Login extends React.Component {
   static navigationOptions = {

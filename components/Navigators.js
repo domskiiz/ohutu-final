@@ -6,12 +6,11 @@ import {
 } from 'react-native';
 import { StackNavigator, DrawerNavigator } from 'react-navigation';
 
-import Home from './Home.js';
-import Login from './Login.js';
-import Register from './Register.js';
-import OhutuMap from './OhutuMap.js';
-import Page2 from './Page2.js';
-import MapOhutu from './MapOhutu.js';
+import Home from './signedOut/Home.js';
+import Login from './signedOut/Login.js';
+import Register from './signedOut/Register.js';
+import OhutuMap from './signedIn/OhutuMap.js';
+import Logout from './signedIn/Logout.js';
 
 export const SignedOut = StackNavigator({
   Home: { screen: Home },
@@ -21,5 +20,5 @@ export const SignedOut = StackNavigator({
 
 export const SignedIn = DrawerNavigator({
   Map: { screen: OhutuMap },
-  Page2: { screen: Page2 }
+  Logout: { screen: Logout }
 })
